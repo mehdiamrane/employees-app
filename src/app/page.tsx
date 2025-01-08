@@ -1,40 +1,18 @@
 "use client";
 
-import { useGetEmployeeList } from "@/domain/hooks/useGetEmployeeList.hook";
-import EmployeeCard from "@/ui/components/EmployeeCard.component";
-import Link from "next/link";
+import { NavigationCard } from "@/components/navigation-card";
+import { NAVIGATION_DATA } from "@/data/constants";
 
 export default function Home() {
-  const { data, isLoading, isError } = useGetEmployeeList();
-
   return (
-    <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">
-      <h1>Employee List {data && <span>({data.length})</span>}</h1>
-      <Link className="border px-2 py-1 rounded-md" href={`/employee/create`}>
-        Create
-      </Link>
-      {data && (
-        <ol className="flex flex-col gap-2">
-          {data?.map((employee, index) => (
-            <li key={index}>
-              <Link href={`/employee/${employee.id}`}>
-                <EmployeeCard employee={employee} />
-              </Link>
-            </li>
-          ))}
-        </ol>
-      )}
+    <main className="flex min-h-screen flex-col items-start justify-start p-6 gap-6">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
 
-      {isLoading && (
-        <div className="flex-1 w-full items-center justify-center">
-          <span>loading</span>
-        </div>
-      )}
-      {!data && !isLoading && isError && (
-        <div className="flex-1 w-full items-center justify-center">
-          <span>error</span>
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
+        {NAVIGATION_DATA.map((navItem) => (
+          <NavigationCard key={navItem.title} {...navItem} />
+        ))}
+      </div>
     </main>
   );
 }
