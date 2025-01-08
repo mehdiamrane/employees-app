@@ -1,17 +1,11 @@
 import EmployeeDatasourceContract from "@/domain/contracts/employeeDatasource.contract";
-import {
-  EmployeeListModel,
-  EmployeeListSchema,
-  EmployeeModel,
-} from "@/domain/models/employee.model";
+import { EmployeeListModel, EmployeeListSchema, EmployeeModel } from "@/domain/models/employee.model";
 import { GetEmployeeByIdParams } from "@/domain/params/employee.param";
 
 export default class EmployeeDatasource extends EmployeeDatasourceContract {
   public async getEmployeeList(): Promise<EmployeeListModel | undefined> {
     try {
-      const response = await fetch(
-        "https://dummy.restapiexample.com/api/v1/employees",
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/employees`);
 
       // Validate response
       if (response.status !== 200) {
@@ -29,27 +23,19 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async createEmployee(
-    params: unknown,
-  ): Promise<EmployeeModel | undefined> {
+  public async createEmployee(params: unknown): Promise<EmployeeModel | undefined> {
     throw new Error("Method not implemented.");
   }
 
-  public async getEmployeeById(
-    params: GetEmployeeByIdParams,
-  ): Promise<EmployeeModel | undefined> {
+  public async getEmployeeById(params: GetEmployeeByIdParams): Promise<EmployeeModel | undefined> {
     throw new Error("Method not implemented.");
   }
 
-  public async updateEmployeeById(
-    params: unknown,
-  ): Promise<EmployeeModel | undefined> {
+  public async updateEmployeeById(params: unknown): Promise<EmployeeModel | undefined> {
     throw new Error("Method not implemented.");
   }
 
-  public deleteEmployeeById(
-    params: unknown,
-  ): Promise<EmployeeModel | undefined> {
+  public deleteEmployeeById(params: unknown): Promise<EmployeeModel | undefined> {
     throw new Error("Method not implemented.");
   }
 }

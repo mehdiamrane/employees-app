@@ -1,40 +1,23 @@
 "use client";
 
+import { EmployeeTable } from "@/components/employee-table";
+import { Button } from "@/components/ui/button";
 import { useGetEmployeeList } from "@/domain/hooks/useGetEmployeeList.hook";
-import EmployeeCard from "@/ui/components/EmployeeCard.component";
 import Link from "next/link";
 
-export default function Home() {
-  const { data, isLoading, isError } = useGetEmployeeList();
+export default function EmployeesPage() {
+  const { data, isLoading, isError, refetch } = useGetEmployeeList();
 
   return (
-    <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">
-      <h1>Employee List {data && <span>({data.length})</span>}</h1>
-      <Link className="border px-2 py-1 rounded-md" href={`/employees/create`}>
-        Create
-      </Link>
-      {data && (
-        <ol className="flex flex-col gap-2">
-          {data?.map((employee, index) => (
-            <li key={index}>
-              <Link href={`/employees/${employee.id}`}>
-                <EmployeeCard employee={employee} />
-              </Link>
-            </li>
-          ))}
-        </ol>
-      )}
+    <main className="flex min-h-screen flex-col items-start justify-start p-6 gap-6">
+      <div className="flex justify-between items-center w-full">
+        <h1 className="text-2xl font-bold">Employees {data && <span>({data.length})</span>}</h1>
+        <Button variant="outline" asChild>
+          <Link href="/employees/create">Add Employee</Link>
+        </Button>
+      </div>
 
-      {isLoading && (
-        <div className="flex-1 w-full items-center justify-center">
-          <span>loading</span>
-        </div>
-      )}
-      {!data && !isLoading && isError && (
-        <div className="flex-1 w-full items-center justify-center">
-          <span>error</span>
-        </div>
-      )}
+      <EmployeeTable data={data} isLoading={isLoading} isError={isError} refetch={refetch} />
     </main>
   );
 }
