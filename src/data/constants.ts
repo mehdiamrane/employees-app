@@ -11,7 +11,7 @@ export const USER_DATA = {
 
 export const TEAMS_DATA = [
   {
-    name: "CarCutter",
+    name: "ACME Corp",
     logo: Building,
     plan: "Enterprise",
   },

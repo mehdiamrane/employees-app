@@ -9,8 +9,8 @@ export default function EmployeesPage() {
   const { data, isLoading, isError, refetch } = useGetEmployeeList();
 
   return (
-    <main className="flex min-h-screen flex-col items-start justify-start p-6 gap-6">
-      <div className="flex justify-between items-center w-full">
+    <div className="p-6">
+      <div className="flex justify-between items-center w-full mb-6">
         <h1 className="text-2xl font-bold">Employees {data && <span>({data.length})</span>}</h1>
         <Button variant="outline" asChild>
           <Link href="/employees/create">Add Employee</Link>
@@ -18,6 +18,6 @@ export default function EmployeesPage() {
       </div>
 
       <EmployeeTable data={data} isLoading={isLoading} isError={isError} refetch={refetch} />
-    </main>
+    </div>
   );
 }

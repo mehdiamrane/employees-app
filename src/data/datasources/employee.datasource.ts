@@ -19,6 +19,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
 
       return EmployeeListSchema.parse(data);
     } catch (exception) {
+      console.error("getEmployeeList exception:", exception);
       return undefined;
     }
   }
