@@ -15,10 +15,7 @@ export default function EditEmployeePage() {
     <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">
       <h1>Employee Details</h1>
       <EmployeeCard employee={employee} />
-      <Link
-        className="border px-2 py-1 rounded-md"
-        href={`/employee/${employee.id}/edit`}
-      >
+      <Link className="border px-2 py-1 rounded-md" href={`/employees/${employee.id}/edit`}>
         Edit
       </Link>
     </main>

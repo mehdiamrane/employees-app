@@ -10,14 +10,14 @@ export default function Home() {
   return (
     <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">
       <h1>Employee List {data && <span>({data.length})</span>}</h1>
-      <Link className="border px-2 py-1 rounded-md" href={`/employee/create`}>
+      <Link className="border px-2 py-1 rounded-md" href={`/employees/create`}>
         Create
       </Link>
       {data && (
         <ol className="flex flex-col gap-2">
           {data?.map((employee, index) => (
             <li key={index}>
-              <Link href={`/employee/${employee.id}`}>
+              <Link href={`/employees/${employee.id}`}>
                 <EmployeeCard employee={employee} />
               </Link>
             </li>
