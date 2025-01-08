@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,18 +8,29 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useBreadcrumb } from "@/hooks/use-breadcrumb";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 export function AppBreadcrumb() {
+  const breadcrumbs = useBreadcrumb();
+  const currentPath = usePathname();
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem className="hidden md:block">
-          <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator className="hidden md:block" />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-        </BreadcrumbItem>
+        {breadcrumbs.map((breadcrumb, index) => (
+          <React.Fragment key={breadcrumb.href}>
+            <BreadcrumbItem>
+              {breadcrumb.href === currentPath ? (
+                <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
+              ) : (
+                <BreadcrumbLink href={breadcrumb.href}>{breadcrumb.title}</BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+            {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );
