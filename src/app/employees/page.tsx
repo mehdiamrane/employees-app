@@ -9,7 +9,7 @@ export default function EmployeesPage() {
   const { data, isLoading, isError, refetch } = useGetEmployeeList();
 
   return (
-    <div className="p-6">
+    <div className="py-4">
       <div className="flex justify-between items-center w-full mb-6">
         <h1 className="text-2xl font-bold">Employees {data && <span>({data.length})</span>}</h1>
         <Button variant="outline" asChild>

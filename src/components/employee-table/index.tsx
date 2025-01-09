@@ -2,6 +2,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { EmployeeModel } from "@/domain/models/employee.model";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { EmployeeTableError } from "./error";
 import { EmployeeTableSkeleton } from "./loading";
@@ -14,12 +15,15 @@ interface EmployeeTableProps {
 }
 
 export function EmployeeTable({ data, isLoading, isError, refetch }: EmployeeTableProps) {
+  const params = useParams();
+  const selectedEmployeeId = params.employeeId ? parseInt(params.employeeId as string, 10) : undefined;
+
   if (isLoading) {
     return <EmployeeTableSkeleton />;
   }
 
   if (isError) {
-    return <EmployeeTableError refetch={refetch} />;
+    return <EmployeeTableError refetch={refetch} isLoading={isLoading} />;
   }
 
   if (!data?.length) {
@@ -42,7 +46,7 @@ export function EmployeeTable({ data, isLoading, isError, refetch }: EmployeeTab
       </TableHeader>
       <TableBody>
         {data.map((employee) => (
-          <TableRow key={employee.id}>
+          <TableRow key={employee.id} className={employee.id === selectedEmployeeId ? "bg-muted" : undefined}>
             <TableCell className="font-medium">{employee.id}</TableCell>
             <TableCell>
               <Link href={`/employees/${employee.id}`} className="hover:underline">
