@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useBreadcrumb } from "@/hooks/use-breadcrumb";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -25,7 +26,9 @@ export function AppBreadcrumb() {
               {breadcrumb.href === currentPath ? (
                 <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink href={breadcrumb.href}>{breadcrumb.title}</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link href={breadcrumb.href}>{breadcrumb.title}</Link>
+                </BreadcrumbLink>
               )}
             </BreadcrumbItem>
             {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
