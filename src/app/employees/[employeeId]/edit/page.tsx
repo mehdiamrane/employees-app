@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useUpdateEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { useGetEmployee } from "@/domain/hooks/useGetEmployee.hook";
 import { EmployeeFormData } from "@/domain/models/employee.model";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +17,11 @@ export default function EditEmployeePage({ params }: { params: { employeeId: str
 
   const { data: employee, isLoading: isLoadingEmployee } = useGetEmployee(employeeId);
   const { mutate: updateEmployee, isPending: isUpdating } = useUpdateEmployee(employeeId);
+
+  usePageMeta({
+    title: `Edit Employee #${employeeId}`,
+    description: `Edit the details for employee #${employeeId}`,
+  });
 
   const handleSubmit = (data: EmployeeFormData) => {
     updateEmployee(data, {

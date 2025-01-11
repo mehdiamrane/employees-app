@@ -30,7 +30,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Company</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           const isActive = pathname.startsWith(item.url);

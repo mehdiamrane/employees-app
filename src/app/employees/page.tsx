@@ -1,7 +1,15 @@
+"use client";
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { UserRound } from "lucide-react";
 
 export default function EmployeesPage() {
+  usePageMeta({
+    title: "Employees",
+    description: "View and manage your organization's employees",
+  });
+
   return (
     <div className="p-4">
       <Alert className="bg-muted">
