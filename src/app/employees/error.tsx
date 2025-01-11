@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
 
-interface EmployeeDetailErrorProps {
+interface EmployeesErrorProps {
   error: Error;
   reset: () => void;
 }
 
-export default function EmployeeDetailError({ error, reset }: EmployeeDetailErrorProps) {
+export default function EmployeesError({ error, reset }: EmployeesErrorProps) {
   useEffect(() => {
     console.error(error);
   }, [error]);
