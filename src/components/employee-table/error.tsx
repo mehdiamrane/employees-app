@@ -9,7 +9,7 @@ interface ErrorProps {
 
 export function EmployeeTableError({ refetch, isLoading }: ErrorProps) {
   return (
-    <Alert variant="destructive" className="w-full mx-auto">
+    <Alert variant="destructive" className="w-full mx-auto" data-testid="employee-table-error">
       <AlertCircle className="h-4 w-4" />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription className="flex items-center justify-between gap-3">

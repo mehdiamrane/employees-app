@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 export function EmployeeTableSkeleton() {
   return (
-    <Table>
+    <Table data-testid="employee-table-skeleton">
       <TableHeader>
         <TableRow>
           <TableHead className="min-w-[50px]">ID</TableHead>
