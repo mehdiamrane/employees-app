@@ -18,7 +18,7 @@ export default function CreateEmployeePage() {
   };
 
   return (
-    <div className="p-4 pr-0 space-y-6">
+    <div className="p-4 space-y-6">
       <h2 className="text-lg font-semibold">Create Employee</h2>
       <EmployeeForm onSubmit={handleSubmit} isLoading={isPending} />
     </div>

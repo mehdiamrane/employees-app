@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function EmployeeFormSkeleton() {
   return (
-    <div className="p-4 pr-0 space-y-6">
+    <div className="p-4 space-y-6">
       <h2 className="text-lg font-semibold">Edit Employee</h2>
       <div className="space-y-4">
         <div className="flex justify-center">

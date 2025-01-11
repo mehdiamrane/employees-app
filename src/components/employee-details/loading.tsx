@@ -5,7 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export function EmployeeDetailSkeleton() {
   return (
-    <div className="p-4 pr-0 space-y-6">
+    <div className="p-4 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-start">
         <h2 className="text-lg font-semibold">Employee Details</h2>

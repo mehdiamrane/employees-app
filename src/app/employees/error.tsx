@@ -16,7 +16,7 @@ export default function EmployeesError({ error, reset }: EmployeesErrorProps) {
   }, [error]);
 
   return (
-    <div className="p-4 pr-0">
+    <div className="p-4">
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>

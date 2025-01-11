@@ -34,7 +34,7 @@ export default function EditEmployeePage({ params }: { params: { employeeId: str
   }
 
   return (
-    <div className="p-4 pr-0 space-y-6">
+    <div className="p-4 space-y-6">
       <div className="flex justify-between items-start">
         <h2 className="text-lg font-semibold">Edit Employee #{employee.id}</h2>
         <div className="flex gap-2">

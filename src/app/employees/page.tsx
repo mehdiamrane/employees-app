@@ -3,7 +3,7 @@ import { UserRound } from "lucide-react";
 
 export default function EmployeesPage() {
   return (
-    <div className="p-4 pr-0">
+    <div className="p-4">
       <Alert className="bg-muted">
         <UserRound className="h-4 w-4 text-muted-foreground" />
         <AlertTitle className="text-muted-foreground">No Employee Selected</AlertTitle>
