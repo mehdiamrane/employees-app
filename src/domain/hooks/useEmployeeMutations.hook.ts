@@ -41,7 +41,7 @@ export const useCreateEmployee = () => {
       return employee;
     },
     onError: (err, newEmployee, context) => {
-      toast.error("Failed to create employee");
+      toast.error("Failed to create employee", { description: err.message });
       toast.dismiss(loadingToast);
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousEmployees) {
@@ -89,8 +89,8 @@ export const useUpdateEmployee = (id: number) => {
       toast.success("Employee updated successfully!");
       toast.dismiss(loadingToast);
     },
-    onError: (err, newEmployee, context) => {
-      toast.error("Failed to update employee");
+    onError: (err, _newEmployee, context) => {
+      toast.error("Failed to update employee", { description: err.message });
       toast.dismiss(loadingToast);
 
       // Roll back both queries on failure

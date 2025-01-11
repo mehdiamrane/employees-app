@@ -8,13 +8,16 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/employees`);
 
-      // Validate response
-      if (response.status !== 200) {
-        return undefined;
+      // Get the response data
+      const json = await response.json();
+
+      // Check for error responses
+      if (!response.ok) {
+        const errorMessage =
+          json.errors?.map((error?: { message?: string }) => error?.message).join(", ") || json.message;
+        throw new Error(errorMessage || "Failed to get employee list");
       }
 
-      // Obtain json from response
-      const json = await response.json();
       // Extract data
       const data = json["data"];
 
@@ -25,7 +28,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async createEmployee(params: EmployeeFormData): Promise<EmployeeModel | undefined> {
+  public async createEmployee(params: EmployeeFormData): Promise<EmployeeModel> {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/create`, {
         method: "POST",
@@ -35,20 +38,22 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
         body: JSON.stringify(params),
       });
 
-      // Validate response
-      if (response.status !== 201) {
-        return undefined;
+      // Get the response data
+      const json = await response.json();
+
+      // Check for error responses
+      if (!response.ok) {
+        const errorMessage =
+          json.errors?.map((error?: { message?: string }) => error?.message).join(", ") || json.message;
+        throw new Error(errorMessage || "Failed to create employee");
       }
 
-      // Obtain json from response
-      const json = await response.json();
       // Extract data
       const data = json["data"];
-
       return EmployeeSchema.parse(data);
     } catch (exception) {
       console.error("createEmployee exception:", exception);
-      return undefined;
+      throw exception; // Re-throw the error to be caught by the mutation
     }
   }
 
@@ -56,13 +61,16 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/employee/${params.id}`);
 
-      // Validate response
-      if (response.status !== 200) {
-        return undefined;
+      // Get the response data
+      const json = await response.json();
+
+      // Check for error responses
+      if (!response.ok) {
+        const errorMessage =
+          json.errors?.map((error?: { message?: string }) => error?.message).join(", ") || json.message;
+        throw new Error(errorMessage || "Failed to get employee");
       }
 
-      // Obtain json from response
-      const json = await response.json();
       // Extract data
       const data = json["data"];
 
@@ -73,7 +81,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async updateEmployeeById(params: { id: number } & EmployeeFormData): Promise<EmployeeModel | undefined> {
+  public async updateEmployeeById(params: { id: number } & EmployeeFormData): Promise<EmployeeModel> {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/update/${params.id}`, {
         method: "PUT",
@@ -83,20 +91,22 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
         body: JSON.stringify(params),
       });
 
-      // Validate response
-      if (response.status !== 200) {
-        return undefined;
+      // Get the response data
+      const json = await response.json();
+
+      // Check for error responses
+      if (!response.ok) {
+        const errorMessage =
+          json.errors?.map((error?: { message?: string }) => error?.message).join(", ") || json.message;
+        throw new Error(errorMessage || "Failed to update employee");
       }
 
-      // Obtain json from response
-      const json = await response.json();
       // Extract data
       const data = json["data"];
-
       return EmployeeSchema.parse(data);
     } catch (exception) {
       console.error("updateEmployeeById exception:", exception);
-      return undefined;
+      throw exception; // Re-throw the error to be caught by the mutation
     }
   }
 
