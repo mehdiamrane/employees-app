@@ -24,10 +24,11 @@ export const useCreateEmployee = () => {
 
       // Optimistically update to the new value
       if (previousEmployees) {
+        const maxId = Math.max(...previousEmployees.map((emp) => emp.id), 0);
         queryClient.setQueryData<EmployeeModel[]>(["getEmployeeList"], (old = []) => [
           ...old,
           {
-            id: Math.random(), // Temporary ID
+            id: maxId + 1, // Temporary ID based on highest existing ID, would not work in a real-world scenario
             ...newEmployee,
           } as EmployeeModel,
         ]);
