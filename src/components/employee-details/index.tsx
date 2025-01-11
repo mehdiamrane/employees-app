@@ -1,8 +1,12 @@
 import EmployeeFormatter from "@/core/formatters/employee.formatter";
+import { useDeleteEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { EmployeeModel } from "@/domain/models/employee.model";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { DeleteEmployeeDialog } from "../delete-dialog";
 import { Button } from "../ui/button";
 
 interface EmployeeDetailContentProps {
@@ -10,6 +14,17 @@ interface EmployeeDetailContentProps {
 }
 
 export function EmployeeDetailContent({ employee }: EmployeeDetailContentProps) {
+  const router = useRouter();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const { mutate: deleteEmployee, isPending: isDeleting } = useDeleteEmployee(employee.id);
+
+  const handleDelete = () => {
+    deleteEmployee(undefined, {
+      onSuccess: () => {
+        router.push("/employees");
+      },
+    });
+  };
   return (
     <div className="p-4 pr-0 space-y-6">
       <div className="flex justify-between items-start">
@@ -21,7 +36,7 @@ export function EmployeeDetailContent({ employee }: EmployeeDetailContentProps) 
               Edit
             </Link>
           </Button>
-          <Button variant="destructive" size="sm">
+          <Button variant="destructive" size="sm" onClick={() => setShowDeleteDialog(true)}>
             <Trash2 className="w-4 h-4" />
             Delete
           </Button>
@@ -53,6 +68,14 @@ export function EmployeeDetailContent({ employee }: EmployeeDetailContentProps) 
           </div>
         </div>
       </div>
+
+      <DeleteEmployeeDialog
+        employee={employee}
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onConfirm={handleDelete}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

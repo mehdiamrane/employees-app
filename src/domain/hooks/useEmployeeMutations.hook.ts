@@ -107,3 +107,52 @@ export const useUpdateEmployee = (id: number) => {
     },
   });
 };
+
+export const useDeleteEmployee = (id: number) => {
+  const queryClient = useQueryClient();
+  let loadingToast: string | number | undefined;
+
+  return useMutation({
+    mutationFn: () => service.deleteEmployeeById({ id }),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["getEmployee", id] });
+      await queryClient.cancelQueries({ queryKey: ["getEmployeeList"] });
+
+      // Snapshot the previous values
+      const previousEmployee = queryClient.getQueryData<EmployeeModel>(["getEmployee", id]);
+      const previousEmployees = queryClient.getQueryData<EmployeeModel[]>(["getEmployeeList"]);
+
+      // Show loading toast
+      loadingToast = toast.loading("Deleting employee...");
+
+      // Optimistically remove from lists
+      if (previousEmployees) {
+        queryClient.setQueryData<EmployeeModel[]>(["getEmployeeList"], (old = []) =>
+          old.filter((employee) => employee.id !== id)
+        );
+      }
+      queryClient.removeQueries({ queryKey: ["getEmployee", id] });
+
+      return { previousEmployee, previousEmployees };
+    },
+    onSuccess: () => {
+      toast.success("Employee deleted successfully!");
+      toast.dismiss(loadingToast);
+    },
+    onError: (err, _variables, context) => {
+      toast.error("Failed to delete employee", { description: err.message });
+      toast.dismiss(loadingToast);
+
+      // Roll back optimistic updates
+      if (context?.previousEmployees) {
+        queryClient.setQueryData(["getEmployeeList"], context.previousEmployees);
+      }
+      if (context?.previousEmployee) {
+        queryClient.setQueryData(["getEmployee", id], context.previousEmployee);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["getEmployeeList"] });
+    },
+  });
+};
