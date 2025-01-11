@@ -1,8 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { EmployeeModel } from "@/domain/models/employee.model";
-import { EmployeeFormData, employeeFormSchema } from "@/domain/schemas/employee.schema";
+import { EmployeeFormData, EmployeeFormSchema, EmployeeModel } from "@/domain/models/employee.model";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -19,7 +18,7 @@ export function EmployeeForm({ employee, onSubmit, isLoading }: EmployeeFormProp
     formState: { errors },
     watch,
   } = useForm<EmployeeFormData>({
-    resolver: zodResolver(employeeFormSchema),
+    resolver: zodResolver(EmployeeFormSchema),
     defaultValues: {
       employee_name: employee?.employee_name ?? "",
       employee_salary: employee?.employee_salary ?? undefined,

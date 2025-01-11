@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { EmployeeModel } from "../models/employee.model";
-import { EmployeeFormData } from "../schemas/employee.schema";
+import { EmployeeFormData, EmployeeModel } from "../models/employee.model";
 import EmployeeService from "../services/employee.service";
 
 const service = EmployeeService.getInstance();

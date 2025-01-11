@@ -2,7 +2,12 @@
 
 import { usePathname } from "next/navigation";
 
-export function useBreadcrumb() {
+interface Breadcrumb {
+  title: string;
+  href: string;
+}
+
+export function useBreadcrumb(): Breadcrumb[] {
   const pathname = usePathname();
   const paths = pathname.split("/").filter(Boolean);
 

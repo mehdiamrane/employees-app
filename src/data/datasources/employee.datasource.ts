@@ -1,11 +1,16 @@
 import EmployeeDatasourceContract from "@/domain/contracts/employeeDatasource.contract";
 import { EmployeeListModel, EmployeeListSchema, EmployeeModel, EmployeeSchema } from "@/domain/models/employee.model";
-import { GetEmployeeByIdParams } from "@/domain/params/employee.param";
-import { EmployeeFormData } from "@/domain/schemas/employee.schema";
+import {
+  CreateEmployeeParams,
+  DeleteEmployeeParams,
+  GetEmployeeByIdParams,
+  UpdateEmployeeParams,
+} from "@/domain/params/employee.param";
+import { BaseResponse, EmployeeListResponse, EmployeeResponse } from "@/domain/types/api.types";
 import { APIError, NetworkError, ValidationError } from "@/lib/errors";
 
 export default class EmployeeDatasource extends EmployeeDatasourceContract {
-  private async handleResponse<T>(response: Response): Promise<T> {
+  private async handleResponse<T extends BaseResponse<unknown>>(response: Response): Promise<T["data"]> {
     try {
       const json = await response.json();
 
@@ -41,7 +46,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/employees`);
 
-      const data = await this.handleResponse<unknown>(response);
+      const data = await this.handleResponse<EmployeeListResponse>(response);
       return EmployeeListSchema.parse(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -52,7 +57,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async createEmployee(params: EmployeeFormData): Promise<EmployeeModel> {
+  public async createEmployee(params: CreateEmployeeParams): Promise<EmployeeModel> {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/create`, {
         method: "POST",
@@ -62,7 +67,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
         body: JSON.stringify(params),
       });
 
-      const data = await this.handleResponse<unknown>(response);
+      const data = await this.handleResponse<EmployeeResponse>(response);
       return EmployeeSchema.parse(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -77,7 +82,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/employee/${params.id}`);
 
-      const data = await this.handleResponse<unknown>(response);
+      const data = await this.handleResponse<EmployeeResponse>(response);
       return EmployeeSchema.parse(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -88,7 +93,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async updateEmployeeById(params: { id: number } & EmployeeFormData): Promise<EmployeeModel> {
+  public async updateEmployeeById(params: UpdateEmployeeParams): Promise<EmployeeModel> {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/update/${params.id}`, {
         method: "PUT",
@@ -98,7 +103,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
         body: JSON.stringify(params),
       });
 
-      const data = await this.handleResponse<unknown>(response);
+      const data = await this.handleResponse<EmployeeResponse>(response);
       return EmployeeSchema.parse(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -109,13 +114,13 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     }
   }
 
-  public async deleteEmployeeById(params: { id: number }): Promise<EmployeeModel> {
+  public async deleteEmployeeById(params: DeleteEmployeeParams): Promise<EmployeeModel> {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/delete/${params.id}`, {
         method: "DELETE",
       });
 
-      const data = await this.handleResponse<unknown>(response);
+      const data = await this.handleResponse<EmployeeResponse>(response);
       return EmployeeSchema.parse(data);
     } catch (error) {
       if (error instanceof Error) {

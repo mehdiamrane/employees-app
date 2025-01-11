@@ -1,12 +1,13 @@
 import { z } from "zod";
-import { EmployeeIdSchema } from "../models/employee.model";
+import { EmployeeFormSchema } from "../models/employee.model";
 
-export const GetEmployeeByIdSchema = z.object({
-  id: EmployeeIdSchema,
-});
+const IdSchema = z.object({ id: z.number().positive() });
+
+export const GetEmployeeByIdSchema = IdSchema;
+export const DeleteEmployeeSchema = IdSchema;
+export const UpdateEmployeeSchema = IdSchema.merge(EmployeeFormSchema);
+
 export type GetEmployeeByIdParams = z.infer<typeof GetEmployeeByIdSchema>;
-
-export const UpdateEmployeeSchema = z.object({
-  name: z.string().min(1),
-});
+export type CreateEmployeeParams = z.infer<typeof EmployeeFormSchema>;
 export type UpdateEmployeeParams = z.infer<typeof UpdateEmployeeSchema>;
+export type DeleteEmployeeParams = z.infer<typeof DeleteEmployeeSchema>;

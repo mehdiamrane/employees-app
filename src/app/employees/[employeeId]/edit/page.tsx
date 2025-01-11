@@ -6,7 +6,7 @@ import { EmployeeFormSkeleton } from "@/components/employee-form/loading";
 import { Button } from "@/components/ui/button";
 import { useUpdateEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { useGetEmployee } from "@/domain/hooks/useGetEmployee.hook";
-import { EmployeeFormData } from "@/domain/schemas/employee.schema";
+import { EmployeeFormData } from "@/domain/models/employee.model";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

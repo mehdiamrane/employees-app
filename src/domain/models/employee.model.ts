@@ -1,28 +1,22 @@
 import { z } from "zod";
 
-export const EmployeeIdSchema = z.number().positive();
-export type EmployeeIdModel = z.infer<typeof EmployeeIdSchema>;
+// Base validation rules
+const BaseEmployeeSchema = {
+  employee_name: z.string().min(1, "Name is required"),
+  employee_salary: z.coerce
+    .number()
+    .min(1, "Salary must be greater than 0")
+    .max(1_000_000, "Salary must be less or equal than 1 million"),
+  employee_age: z.coerce.number().min(18, "Age must be at least 18").max(100, "Age must be less than 100"),
+  profile_image: z.string().url("Must be a valid URL").or(z.string().length(0)),
+};
 
-export const EmployeeNameSchema = z.string().min(1);
-export type EmployeeNameModel = z.infer<typeof EmployeeNameSchema>;
-
-export const EmployeeSalarySchema = z.number().positive();
-export type EmployeeSalaryModel = z.infer<typeof EmployeeSalarySchema>;
-
-export const EmployeeAgeSchema = z.number().positive();
-export type EmployeeAgeModel = z.infer<typeof EmployeeAgeSchema>;
-
-export const EmployeeProfileImageSchema = z.union([z.string().url(), z.string().length(0)]);
-export type EmployeeProfileImageModel = z.infer<typeof EmployeeProfileImageSchema>;
-
-export const EmployeeSchema = z.object({
-  id: EmployeeIdSchema,
-  employee_name: EmployeeNameSchema,
-  employee_salary: EmployeeSalarySchema,
-  employee_age: EmployeeAgeSchema,
-  profile_image: EmployeeProfileImageSchema,
+export const EmployeeFormSchema = z.object(BaseEmployeeSchema);
+export const EmployeeSchema = EmployeeFormSchema.extend({
+  id: z.number().positive(),
 });
-export type EmployeeModel = z.infer<typeof EmployeeSchema>;
-
 export const EmployeeListSchema = EmployeeSchema.array();
-export type EmployeeListModel = z.infer<typeof EmployeeListSchema>;
+
+export type EmployeeModel = z.infer<typeof EmployeeSchema>;
+export type EmployeeListModel = EmployeeModel[];
+export type EmployeeFormData = z.infer<typeof EmployeeFormSchema>;

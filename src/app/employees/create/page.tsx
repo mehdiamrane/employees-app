@@ -2,7 +2,7 @@
 
 import { EmployeeForm } from "@/components/employee-form";
 import { useCreateEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
-import { EmployeeFormData } from "@/domain/schemas/employee.schema";
+import { EmployeeFormData } from "@/domain/models/employee.model";
 import { useRouter } from "next/navigation";
 
 export default function CreateEmployeePage() {
