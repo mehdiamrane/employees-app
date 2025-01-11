@@ -1,6 +1,6 @@
 "use client";
 
-import { AppLayout } from "@/components/app-layout";
+import { AppLayout } from "@/components/app-layout/app-layout";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Inter } from "next/font/google";

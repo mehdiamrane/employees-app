@@ -2,9 +2,9 @@
 
 import * as React from "react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
+import { TeamSwitcher } from "@/components/app-layout/team-switcher";
+import { NavMain } from "@/components/navigation/nav-main";
+import { NavUser } from "@/components/navigation/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 import { NAVIGATION_DATA, TEAMS_DATA, USER_DATA } from "@/data/constants";
 

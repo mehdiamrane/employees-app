@@ -1,4 +1,4 @@
-import { NavigationCard } from "@/components/navigation-card";
+import { NavigationCard } from "@/components/navigation/navigation-card";
 import { NAVIGATION_DATA } from "@/data/constants";
 
 export default function Home() {
