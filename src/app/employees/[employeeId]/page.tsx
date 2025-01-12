@@ -5,10 +5,11 @@ import { EmployeeDetailError } from "@/components/employee-details/error";
 import { EmployeeDetailSkeleton } from "@/components/employee-details/loading";
 import { useGetEmployee } from "@/domain/hooks/useGetEmployee.hook";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { APIError } from "@/lib/errors";
 
 export default function EmployeeDetailPage({ params }: { params: { employeeId: string } }) {
   const employeeId = parseInt(params.employeeId, 10);
-  const { data: employee, isError, isLoading, refetch } = useGetEmployee(employeeId);
+  const { data: employee, isError, isLoading, refetch, error } = useGetEmployee(employeeId);
 
   usePageMeta({
     title: `Employee #${employeeId}`,
@@ -20,7 +21,8 @@ export default function EmployeeDetailPage({ params }: { params: { employeeId: s
   }
 
   if (isError || !employee) {
-    return <EmployeeDetailError refetch={refetch} isLoading={isLoading} />;
+    const errorStatus = error instanceof APIError ? error.status : undefined;
+    return <EmployeeDetailError refetch={refetch} isLoading={isLoading} errorStatus={errorStatus} />;
   }
 
   return <EmployeeDetailContent employee={employee} />;

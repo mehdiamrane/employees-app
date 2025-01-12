@@ -3,16 +3,17 @@
 import { EmployeeForm } from "@/components/employee-form";
 import EmployeeFormError from "@/components/employee-form/error";
 import { EmployeeFormSkeleton } from "@/components/employee-form/loading";
+import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
 import { useUpdateEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { useGetEmployee } from "@/domain/hooks/useGetEmployee.hook";
 import { EmployeeFormData } from "@/domain/models/employee.model";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function EditEmployeePage({ params }: { params: { employeeId: string } }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const employeeId = parseInt(params.employeeId, 10);
 
   const { data: employee, isLoading: isLoadingEmployee } = useGetEmployee(employeeId);
@@ -26,7 +27,8 @@ export default function EditEmployeePage({ params }: { params: { employeeId: str
   const handleSubmit = (data: EmployeeFormData) => {
     updateEmployee(data, {
       onSuccess: () => {
-        router.push(`/employees/${employeeId}`);
+        const params = new URLSearchParams(searchParams.toString());
+        router.push(`/employees/${employeeId}?${params.toString()}`);
       },
     });
   };

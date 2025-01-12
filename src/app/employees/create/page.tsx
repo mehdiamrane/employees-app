@@ -4,10 +4,11 @@ import { EmployeeForm } from "@/components/employee-form";
 import { useCreateEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { EmployeeFormData } from "@/domain/models/employee.model";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function CreateEmployeePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { mutate: createEmployee, isPending } = useCreateEmployee();
 
   usePageMeta({
@@ -18,7 +19,10 @@ export default function CreateEmployeePage() {
   const handleSubmit = (data: EmployeeFormData) => {
     createEmployee(data, {
       onSuccess: (employee) => {
-        router.push(employee?.id ? `/employees/${employee.id}` : "/employees");
+        const params = new URLSearchParams(searchParams.toString());
+        router.push(
+          employee?.id ? `/employees/${employee.id}?${params.toString()}` : `/employees?${params.toString()}`
+        );
       },
     });
   };

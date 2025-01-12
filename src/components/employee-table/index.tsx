@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { EmployeeModel } from "@/domain/models/employee.model";
-import { ArrowRightIcon } from "lucide-react";
-import Link from "next/link";
+import { ArrowRightIcon, UserPlus, UserX } from "lucide-react";
 import { useParams } from "next/navigation";
+import { Link } from "../link";
 import { Button } from "../ui/button";
 import { EmployeeTableError } from "./error";
 import { EmployeeTableSkeleton } from "./loading";
@@ -28,15 +28,24 @@ export function EmployeeTable({ data, isLoading, isError, refetch }: EmployeeTab
 
   if (!data?.length) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 text-muted-foreground">
-        <p>No employees found</p>
+      <div className="flex flex-col items-center justify-center p-8 gap-4 text-muted-foreground bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/25">
+        <div className="flex flex-col items-center gap-2 text-center">
+          <UserX className="w-10 h-10 opacity-50" />
+          <span className="text-md font-semibold">No employees found</span>
+        </div>
+        <Button variant="outline" size="sm" asChild>
+          <Link href="/employees/create" className="gap-2">
+            <UserPlus className="w-4 h-4" />
+            Add Employee
+          </Link>
+        </Button>
       </div>
     );
   }
 
   return (
     <Table>
-      <TableCaption>{data.length} employees</TableCaption>
+      <TableCaption>{data.length === 1 ? "1 employee" : `${data.length} employees`}</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="min-w-[50px]">ID</TableHead>

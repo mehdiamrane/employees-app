@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/components/link";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,7 +10,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useBreadcrumb } from "@/hooks/use-breadcrumb";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 

@@ -1,5 +1,5 @@
+import { Link } from "@/components/link";
 import { LucideIcon } from "lucide-react";
-import Link from "next/link";
 
 interface NavigationCardProps {
   title: string;

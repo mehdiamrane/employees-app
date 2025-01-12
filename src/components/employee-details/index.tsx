@@ -3,10 +3,10 @@ import { useDeleteEmployee } from "@/domain/hooks/useEmployeeMutations.hook";
 import { EmployeeModel } from "@/domain/models/employee.model";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Pencil, Trash2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { DeleteEmployeeDialog } from "../delete-dialog";
+import { Link } from "../link";
 import { Button } from "../ui/button";
 
 interface EmployeeDetailContentProps {
@@ -15,13 +15,15 @@ interface EmployeeDetailContentProps {
 
 export function EmployeeDetailContent({ employee }: EmployeeDetailContentProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { mutate: deleteEmployee, isPending: isDeleting } = useDeleteEmployee(employee.id);
 
   const handleDelete = () => {
     deleteEmployee(undefined, {
       onSuccess: () => {
-        router.push("/employees");
+        const params = new URLSearchParams(searchParams.toString());
+        router.push(`/employees?${params.toString()}`);
       },
     });
   };
