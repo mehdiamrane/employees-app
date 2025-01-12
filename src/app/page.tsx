@@ -1,3 +1,5 @@
+"use client";
+
 import { NavigationCard } from "@/components/navigation/navigation-card";
 import { NAVIGATION_DATA } from "@/data/constants";
 
