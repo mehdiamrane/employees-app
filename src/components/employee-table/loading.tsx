@@ -1,12 +1,23 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ArrowUpDownIcon } from "lucide-react";
 
 export function EmployeeTableSkeleton() {
   return (
     <Table data-testid="employee-table-skeleton">
       <TableHeader>
         <TableRow>
-          <TableHead className="min-w-[50px]">ID</TableHead>
-          <TableHead className="w-full">Name</TableHead>
+          <TableHead className="min-w-[50px]">
+            <div className="flex items-center gap-1">
+              ID
+              <ArrowUpDownIcon className="h-3 w-3" />
+            </div>
+          </TableHead>
+          <TableHead className="w-full">
+            <div className="flex items-center gap-1">
+              Name
+              <ArrowUpDownIcon className="h-3 w-3" />
+            </div>
+          </TableHead>
           <TableHead className="min-w-[90px] text-center">Actions</TableHead>
         </TableRow>
       </TableHeader>
