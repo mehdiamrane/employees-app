@@ -8,22 +8,5 @@
     "editor.formatOnType": false,
     "editor.rulers": [100]
   },
-  "files.exclude": {
-    ".cache": true,
-    ".github": true,
-    ".next": true,
-    ".npm": true,
-    ".ssh": true,
-    ".vscode-server*": true,
-    "node_modules": true,
-    ".gitconfig": true
-  },
-  "cSpell.words": [
-    "Datasource",
-    "datasources",
-    "restapiexample",
-    "tailwind",
-    "tailwindcss",
-    "tanstack"
-  ]
+  "cSpell.words": ["Datasource", "datasources", "restapiexample", "tailwind", "tailwindcss", "tanstack"]
 }
