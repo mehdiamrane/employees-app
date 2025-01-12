@@ -36,7 +36,8 @@ next-env.d.ts
 
 # Other
 nohup.out
-.env*
+.env
+.env.local
 
 # VSCode
 .vscode-server
